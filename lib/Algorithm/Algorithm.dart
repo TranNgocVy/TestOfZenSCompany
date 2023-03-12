@@ -1,5 +1,3 @@
-import 'dart:io';
-
 void miniMaxSum(List<int> arr){
   if(arr.length == 5){
     int sum = 0;

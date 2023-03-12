@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:testofzenscompany/Mobile/Component/Footer.dart';
 import 'package:testofzenscompany/Mobile/Const/Const.dart';
+import 'package:testofzenscompany/Mobile/Model/Joke.dart';
+import 'package:testofzenscompany/Mobile/SerVice/DatabaseService.dart';
+import 'package:testofzenscompany/Mobile/SerVice/HandleService.dart';
 import './Component/Header.dart';
 void main() {
   runApp(const MyApp());
@@ -41,10 +45,36 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String userCookie = "1234568";
+  Joke? joke;
+
+  @override
+  void initState() {
+
+    insertJoke();
+    changeJoke(userCookie);
+  }
+
+  void changeJoke(String userCookie) async {
+    final newJoke = await HandleService.changeJoke(userCookie);
+    setState(() {
+      joke = newJoke;
+    });
+  }
+
+  void insertJoke() async {
+    Const.JOKESCONTENT.forEach((element) async  {
+      int id = element.hashCode;
+      await JokeService.insertJoke(Joke(id: id, content: element, createdAt: DateTime.now()));
+      id++;
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             Header(),
@@ -92,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
               padding: EdgeInsets.fromLTRB(15, 30, 20,30),
               child: Text(
-                "Content",
+                joke != null ? "${joke!.content}" : "Loading",
                 style: TextStyle(
                   fontSize: Const.CONTENTSIZE,
                 ),
@@ -106,13 +136,23 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ElevatedButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      if(joke != null && joke!.id != null){
+                        HandleService.insertVotedToday(joke!.id, 1, userCookie);
+                        changeJoke(userCookie);
+                      }
+                    },
                     child: Text("This is Funny!", style: TextStyle(color: Colors.white),),
                     style: ButtonStyle(
                       backgroundColor:  MaterialStateProperty.all(Colors.blueAccent),
                     ),
                   ),ElevatedButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      if(joke != null && joke!.id != null){
+                        HandleService.insertVotedToday(joke!.id, 0, userCookie);
+                        changeJoke(userCookie);
+                      }
+                    },
                     child: Text("This is not Funny!", style: TextStyle(color: Colors.white),),
                     style: ButtonStyle(
                       backgroundColor:  MaterialStateProperty.all(Colors.green),
