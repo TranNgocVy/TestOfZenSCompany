@@ -45,7 +45,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String userCookie = "1234568";
+  String userCookie = "123456";
   Joke? joke;
 
   @override
@@ -75,95 +75,124 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Header(),
-            Container(
-              padding: EdgeInsets.all(30),
-              color: Colors.green,
-              child: Column(
 
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          "A joke a day keeps the doctor away",
-                          style: TextStyle(
-                            fontSize: Const.TITLESIZE,
-                            color: Colors.white,
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height - 150,
+          child:  Column(
+            children: [
+              Header(),
+              Container(
+                padding: EdgeInsets.all(30),
+                color: Color(0xFF049F44),
+                child: Column(
+
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            "A joke a day keeps the doctor away",
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                            textAlign: TextAlign.center,
+
                           ),
-                          textAlign: TextAlign.center,
-
                         ),
-                      ),
 
-                    ],
-                  ),
-                  SizedBox(height: 10,),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          "If you joke wrong way, your teeth have to pay. (Serious)",
-                          style: TextStyle(
-                            fontSize: Const.CONTENTSIZE,
-                            color: Colors.white,
+                      ],
+                    ),
+                    SizedBox(height: 30,),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            "If you joke wrong way, your teeth have to pay. (Serious)",
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.white,
+                            ),
+                            textAlign: TextAlign.center,
+
                           ),
-                          textAlign: TextAlign.center,
-
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.fromLTRB(15, 30, 20,30),
-              child: Text(
-                joke != null ? "${joke!.content}" : "Loading",
-                style: TextStyle(
-                  fontSize: Const.CONTENTSIZE,
+                        )
+                      ],
+                    )
+                  ],
                 ),
               ),
+              Container(
+                padding: EdgeInsets.fromLTRB(15, 30, 20,30),
+                child: Text(
+                  joke != null ? "${joke!.content}" : "Loading",
+                  style: TextStyle(
+                      fontSize: 13,
+                      color: Colors.black54
+                  ),
+                ),
 
-            ),
-
-            Container(
-              padding: EdgeInsets.all(30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ElevatedButton(
-                    onPressed: (){
-                      if(joke != null && joke!.id != null){
-                        HandleService.insertVotedToday(joke!.id, 1, userCookie);
-                        changeJoke(userCookie);
-                      }
-                    },
-                    child: Text("This is Funny!", style: TextStyle(color: Colors.white),),
-                    style: ButtonStyle(
-                      backgroundColor:  MaterialStateProperty.all(Colors.blueAccent),
-                    ),
-                  ),ElevatedButton(
-                    onPressed: (){
-                      if(joke != null && joke!.id != null){
-                        HandleService.insertVotedToday(joke!.id, 0, userCookie);
-                        changeJoke(userCookie);
-                      }
-                    },
-                    child: Text("This is not Funny!", style: TextStyle(color: Colors.white),),
-                    style: ButtonStyle(
-                      backgroundColor:  MaterialStateProperty.all(Colors.green),
-                    ),
-                  )
-                ],
               ),
-            ),
-            Footer(),
-          ],
-        ),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    padding: EdgeInsets.all(30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ElevatedButton(
+                          onPressed: (){
+                            if(joke != null && joke!.id != null){
+                              HandleService.insertVotedToday(joke!.id, 1, userCookie);
+                              changeJoke(userCookie);
+                            }
+                          },
+                          child: Text("This is Funny!", style: TextStyle(color: Colors.white),),
+                          style: ButtonStyle(
+                              backgroundColor:  MaterialStateProperty.all(MaterialAccentColor(0xFF257BE4, <int, Color>{})),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(0),
+                                  )
+                              )
+                          ),
+                        ),ElevatedButton(
+                          onPressed: (){
+                            if(joke != null && joke!.id != null){
+                              HandleService.insertVotedToday(joke!.id, 0, userCookie);
+                              changeJoke(userCookie);
+                            }
+                          },
+                          child: Text("This is not Funny!", style: TextStyle(color: Colors.white),),
+                          style: ButtonStyle(
+                              backgroundColor:  MaterialStateProperty.all(MaterialAccentColor(0xFF049F44, <int, Color>{})),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(0),
+                                  )
+                              )
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              )
+
+              ,
+
+
+            ],
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // mainAxisSize: MainAxisSize.max,
+          ),
+        )
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child:  Footer(),
+        elevation: 0,
       ),
     );
   }

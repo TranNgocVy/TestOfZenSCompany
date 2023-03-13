@@ -5,13 +5,13 @@ class Header extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(20,50,20,10),
+      padding: EdgeInsets.fromLTRB(20,10,20,10),
       alignment: Alignment.topCenter,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
 
-          Image(image: AssetImage('assets/images/logo.png'), width: 50,),
+          Image(image: AssetImage('assets/images/logo.png'), width: 40,),
           Container(
             child: Row(
               children: [
@@ -25,8 +25,8 @@ class Header extends StatelessWidget{
                         Text(
                           "Handicrafted by",
                           style: TextStyle(
-                            color: Colors.black26,
-                            fontSize: Const.COMMENTSIZE,
+                            color: Colors.black38,
+                            fontSize: 11,
                           ),
                         ),
                       ],
@@ -40,7 +40,7 @@ class Header extends StatelessWidget{
                         Text(
                           "Jim HLS",
                           style: TextStyle(
-                            fontSize: Const.CONTENTSIZE,
+                            fontSize: 11,
                             color: Colors.black87,
                           ),
                           textAlign: TextAlign.end,
@@ -56,7 +56,7 @@ class Header extends StatelessWidget{
                 SizedBox(width: 5,),
                 CircleAvatar(
                   backgroundImage: AssetImage('assets/images/avatar.png',),
-                  maxRadius: 25,
+                  maxRadius: 20,
                 ),
               ],
             ),
