@@ -5,8 +5,8 @@ class Footer extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 150,
-      padding: EdgeInsets.fromLTRB(20,5,20,10),
+      height: 140,
+      padding: EdgeInsets.fromLTRB(10,5,10,5),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(width: 2, color: Colors.grey.shade200),
@@ -40,7 +40,7 @@ class Footer extends StatelessWidget{
                 child: Text(
                   "${Const.COPYRIGHT}",
                   style: TextStyle(
-                    color: Colors.black54,
+                    color: Color(0xFF505351),
                     fontSize: 13,
                   ),
                   textAlign: TextAlign.center,
